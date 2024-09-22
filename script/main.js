@@ -1,10 +1,20 @@
 // Run when the webpage is loaded
 window.addEventListener("load", () => {
-  document
-    .querySelector(".song")
-    .play()
-    .then(resolveFetch().then(animationTimeline()));
-} );
+  // 显示确认对话框，询问用户是否播放音乐
+  const playMusic = confirm("是否播放音乐？");
+
+  if (playMusic) {
+    // 如果用户选择播放音乐，则执行音乐播放和动画
+    document.querySelector(".song").play().then(() => {
+      resolveFetch().then(animationTimeline());
+    });
+  } else {
+    // 如果用户选择不播放音乐，则只执行动画
+    resolveFetch().then(animationTimeline());
+  }
+});
+
+// 其余的代码保持不变...
 
 // Animation Timeline
 const animationTimeline = () => {
