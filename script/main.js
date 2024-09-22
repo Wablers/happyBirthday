@@ -1,29 +1,23 @@
 // Run when the webpage is loaded
-window.addEventListener("load", () => {
-  // 延迟执行 confirm 函数，确保用户有机会看到提示
-  setTimeout(() => {
-    const playMusic = confirm("欢迎来到我的页面！是否要播放背景音乐？");
-
-    if (playMusic) {
-      // 用户选择播放音乐，触发隐藏按钮的点击事件
-      const playButton = document.getElementById("playMusicBtn");
-      playButton.click();
-    } else {
-      // 用户选择不播放音乐，直接执行动画
-      resolveFetch().then(animationTimeline());
-    }
-  }, 100); // 延迟时间可以根据需要调整
-});
-
-// 绑定点击事件到隐藏的播放按钮
-document.getElementById("playMusicBtn").addEventListener("click", () => {
+document.addEventListener("DOMContentLoaded", function() {
+  const playButton = document.getElementById("playMusicBtn");
   const audio = document.querySelector(".song");
-  audio.play().then(() => {
-    // 音乐播放成功后执行动画
-    resolveFetch().then(animationTimeline());
-  }).catch(error => {
-    // 音乐播放失败的错误处理
-    console.error("音乐播放失败:", error);
+
+  // 显示按钮
+  playButton.style.display = 'block';
+
+  playButton.addEventListener("click", function() {
+    // 播放音乐
+    audio.play().then(() => {
+      // 音乐播放成功后执行动画
+      resolveFetch().then(animationTimeline());
+    }).catch(error => {
+      // 音乐播放失败的错误处理
+      console.error("音乐播放失败:", error);
+    });
+
+    // 隐藏按钮
+    playButton.style.display = 'none';
   });
 });
 
