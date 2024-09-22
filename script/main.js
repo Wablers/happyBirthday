@@ -1,17 +1,24 @@
 // Run when the webpage is loaded
 window.addEventListener("load", () => {
-  // 显示确认对话框，询问用户是否播放音乐
-  const playMusic = confirm("是否播放音乐？");
+  // 延迟执行 confirm 函数，确保用户有机会看到提示
+  setTimeout(() => {
+    const playMusic = confirm("是否要播放背景音乐捏？");
 
-  if (playMusic) {
-    // 如果用户选择播放音乐，则执行音乐播放和动画
-    document.querySelector(".song").play().then(() => {
+    if (playMusic) {
+      // 用户选择播放音乐
+      const audio = document.querySelector(".song");
+      audio.play().then(() => {
+        // 音乐播放成功后执行动画
+        resolveFetch().then(animationTimeline());
+      }).catch(error => {
+        // 音乐播放失败的错误处理
+        console.error("音乐播放失败:", error);
+      });
+    } else {
+      // 用户选择不播放音乐，直接执行动画
       resolveFetch().then(animationTimeline());
-    });
-  } else {
-    // 如果用户选择不播放音乐，则只执行动画
-    resolveFetch().then(animationTimeline());
-  }
+    }
+  }, 1000); // 延迟时间可以根据需要调整
 });
 
 // 其余的代码保持不变...
